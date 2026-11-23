@@ -44,7 +44,8 @@ It unpacks to the same places as on the build PC (`~/.wine-tebeos`, `~/.local/sh
 renames the Windows user folder to the new user, writes the terminal settings (`<Host>`,
 `Ayarlar.ini` connection sections; the vendor's defaults are kept) and adds the menu entry,
 desktop icon and `~/.local/share/tebeos/start-tebeos.sh`. TEBEOS updates itself on first
-start. The server role is still to come.
+start. For the main computer: `--role server --restore <TEBEOS backup>`
+(`TEBEOS-SERVER-NOTES.md` §8).
 
 Building needs a private display (`tebeos-work/run/nested.sh`): TEBEOS's installer refuses
 silent mode, so its window is pressed through on :5 (licence, folder, untick the desktop icon,

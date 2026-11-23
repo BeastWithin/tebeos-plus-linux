@@ -34,7 +34,7 @@ based on an old Gecko (Firefox 47), which can't run SGK's current Medula pages. 
 - **`wine-patch/`**: a small fix to Wine's own mshtml (keypress `keyCode`), needed for the captcha
   field when not using the shim.
 - **`install-tebeos-client.sh`**, **`image/`**: install a client PC, or build a ready-made
-  installer image for new PCs.
+  installer image that sets up a terminal or the main computer (database included).
 - **`medula-api/`**: a small Python client for SGK's documented pharmacy stock web service
   (SOAP). It is separate from the TEBEOS work.
 
@@ -59,9 +59,10 @@ sessions), so they are detailed and date-stamped rather than polished.
 ## Where to continue
 
 From `HANDOFF-PATH-A.md`:
-- **Server role:** install the main computer (PostgreSQL on 5454) on Linux too, in the same
-  `.run` image (`--role server`). The risky part is moving a live database; plan it with a
-  full dump-and-restore test.
+- **Server role:** the image installs the main computer too (`--role server --restore
+  <TEBEOS backup>`, see `TEBEOS-SERVER-NOTES.md` §8). Tested with a synthetic backup only; it
+  still needs a test with a real pharmacy database, TEBEOS logging in on it, and Windows
+  terminals against it.
 - **Embed mode gaps:** TEBEOS controls that Wine draws over the web area are hidden behind
   Chromium's window. Untested: other resolutions, HiDPI, several monitors, desktops other than KDE.
   The helper should become a small native program the shim starts itself.

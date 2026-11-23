@@ -264,10 +264,12 @@
 >   - Very fast scrollbar drags can land slightly short, because Chromium coalesces moves.
 >   - Chromium loads the desktop's plasma browser-integration extension (harmless).
 >   - Cookie sync between wininet and Chromium; Medula screens nobody has used yet on Linux.
-> - **Next (agreed with the pharmacist, 2026-11-13):** the image's server role
->   (`--role server` in the same `.run`, not a separate package: adds PostgreSQL on 5454,
->   `CLIENT=FALSE`, backups; the risky part is moving the live database, to be planned with a
->   full dump-and-restore test). Encoding the installer's key sequence in the `app` phase.
+> - **Server role (2026-11-23):** `--role server --restore <TEBEOS backup>` in the same `.run`
+>   installs the main computer: PostgreSQL 12.4 in its own prefix `~/.wine-tebeos-db`, a systemd
+>   user service, the restore, `CLIENT=FALSE`. Tested with a synthetic backup, not yet with a
+>   real pharmacy's. How it works and the move from Windows: `TEBEOS-SERVER-NOTES.md` §8.
+> - **Next:** test the server role with a real backup on the spare PC (restore time, TEBEOS
+>   login, Windows terminals against it). Encoding the installer's key sequence in the `app` phase.
 > - **Vendor letter:** a Turkish letter to TEB built from `VENDOR-NOTES.md` is in
 >   a separate letter (2026-11-13, not in this repo). Update `VENDOR-NOTES.md` with new findings.
 > - **Repo and backups:** this repo is the public snapshot of the project (2026-11-23),

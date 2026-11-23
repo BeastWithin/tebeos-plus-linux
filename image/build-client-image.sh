@@ -5,7 +5,7 @@
 # sign, TEBEOS itself, the mshtml CDP shim, the tessnet2 OCR hookup) and is packed together
 # with the Wine build, the OCR service, the embed helper and setup.sh into one archive. The image is never run
 # as TEBEOS, so it carries no login, pharmacy settings or logs; setup.sh on the target PC
-# picks the role (client now, server later) and writes the settings.
+# picks the role (client or server) and writes the settings.
 #
 # It contains TEBEOS's and Microsoft's files: for the pharmacy's own PCs only, not for
 # sharing (the repo itself stays shareable).

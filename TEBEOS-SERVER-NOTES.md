@@ -139,3 +139,58 @@ WINEPREFIX=~/.wine ~/.local/share/lutris/runners/wine/wine-staging-11.2-x86_64/b
 # stop everything
 ~/.local/share/lutris/runners/wine/wine-staging-11.2-x86_64/bin/wineserver -k
 ```
+
+---
+
+## 8. Server role in the image (2026-11-23)
+
+The `.run` image installs the main computer too: the client installer already ships TEBEOS's
+complete PostgreSQL 12.4 (`initdb`, `postgres`, `pg_dump`, …), so no server installer and no
+second image are needed.
+
+```bash
+./tebeos-linux-<date>.run --role server --restore tebeos_backup_<date>.zip
+```
+
+What `image/setup.sh --role server` does, on top of the client steps:
+- TEBEOS settings: `<Host>127.0.0.1</Host>`, `[CONNECTİON] CLIENT=127.0.0.1`,
+  `[BAGLANTI] CLIENT=FALSE`, `[HOSTNAME] ANABILGISAYAR=<hostname>`.
+- **A Wine prefix only for the database**, `~/.wine-tebeos-db` (PostgreSQL in `C:\tebeos-db`,
+  data in `C:\tebeos-db\data`). Separate from `~/.wine-tebeos`, so TEBEOS crashing or a
+  `wineserver -k` on that prefix can't stop the terminals' database. It uses TEBEOS's own
+  PostgreSQL build, because "Yedek Al" runs TEBEOS's `pg_dump.exe` 12.4, which needs a 12.x server.
+- `initdb` with the vendor's parameters (UTF-8, user `tebeos`); under `LC_ALL=tr_TR.UTF-8` it
+  picks `Turkish_Turkey.1254`, as on Windows. `postgresql.conf`: port 5454, listening on the LAN,
+  and the time zone set explicitly (under Wine PostgreSQL falls back to GMT).
+  `pg_hba.conf`: initdb's local rules plus the terminals' networks (`--allow`, default: this
+  PC's own networks).
+- **Restore** the same way TEBEOS's "Geri Yükle" does (`createdb`, then `psql
+  --single-transaction` of the dump), but stopping at the first error. A TEBEOS backup is a zip
+  holding the plain-SQL `pg_dump` output `tebeos_db.sql`; a bare `.sql` works too.
+- `~/.local/share/tebeos/tebeos-db.sh start|stop|restart|status` and a systemd user service
+  `tebeos-db.service` (enabled; `loginctl enable-linger` so it starts at boot). Windows
+  PostgreSQL refuses to run as an administrator, which every Wine user is, unless `pg_ctl`
+  starts it, so the unit is `Type=oneshot` + `RemainAfterExit` around `pg_ctl start/stop`.
+- `start-tebeos.sh` starts the database first if it is down.
+
+The Windows service `tebeos_db_service` is not created: in the current version only the
+data-import tools (`Aktarim.exe`, `EczanemAktarim.exe`, …) use it; `tebeos_plus.exe` never
+calls the code that does (`Program.RegisterTrTr`).
+
+**Moving a pharmacy's main computer from Windows to Linux:**
+1. At closing time, on the Windows main computer: "Yedek Al" → `backup\tebeos_backup_<date>.zip`.
+   After that, nobody uses TEBEOS anywhere until step 4.
+2. On the Linux PC: `./tebeos-linux-<date>.run --role server --restore <that zip>`.
+3. Give the Linux PC a fixed IP (DHCP reservation). If it has a firewall, open TCP 5454.
+4. Point the terminals at it: Linux terminals `--role client --server-ip <IP>`; Windows terminals
+   in TEBEOS's terminal settings. Then stop the PostgreSQL service on the old Windows PC so
+   nothing can write to the old database by mistake.
+
+**Tested (2026-11-23, in a separate test HOME):** install from the image with a synthetic
+backup made exactly like "Yedek Al"; Turkish text, a PL/pgSQL function, timestamps and the
+time zone came back intact; connection over the LAN address as a terminal makes it; a backup
+with TEBEOS's own `pg_dump.exe` from `~/.wine-tebeos`; `tebeos-db.sh` stop/start; the systemd
+unit start/stop; a broken backup stops the install with the SQL error and leaves no server
+running. **Not yet tested:** a real pharmacy backup (size, restore time), TEBEOS itself
+logging in on the Linux main computer, Windows terminals against it, a TEBEOS update that
+changes the database schema.
