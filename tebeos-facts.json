@@ -1,0 +1,164 @@
+{
+  "_comment": "Machine-readable summary of the TEBEOS-on-Linux findings. Vendor defaults are marked; change them in production.",
+  "_status_2026_10_14": "Login automation WORKS. Post-login Medula menu/navigation BLOCKED: wine-gecko 2.47 = Firefox 47 cannot run SGK's hxclient JS (menu sub-items blank; 'Medula'da Ac' -> E-Recete Giris fails). User confirmed Medula works in modern Chromium/Firefox and CHOSE PATH A: Wine-level 'IE->CEF' shim re-hosting the IE WebBrowser control onto the bundled CEF/Chromium (which already runs under Wine; CDP RemoteDebuggingPort 8080 is already set). Vendor EXEs stay untouched -> survives weekly updates. See HANDOFF-PATH-A.md (canonical for the engine pivot).",
+  "_next_handoff": "HANDOFF-PATH-A.md",
+  "app": {
+    "name": "TEBEOS Plus",
+    "vendor": "Türk Eczacılar Birliği (TEB) - Turkish Pharmacists' Association.  NOTE: KolaySoft is NOT the TEBEOS vendor - it makes the cash-register software TEBEOS talks to (the DB has a 'yazarkasa' schema for it).",
+    "project_version_verified": "1.2.9.3",
+    "db_schema_version_verified": "1.3.8.0",
+    "runtime": "Microsoft .NET Framework 4.5.2 (WinForms, x86)",
+    "ui_toolkit": "DevExpress 15.2",
+    "embedded_browser": "CefSharp / CEF (libcef.dll) + WebView2 files; used to drive SGK 'Medulla'",
+    "db_client": "Npgsql"
+  },
+  "database": {
+    "engine": "PostgreSQL 12.4 (Windows x64 build, bundled by the vendor, runs under Wine)",
+    "host_source": "<install>/tebeos_plus.xml -> <Host>   (NOT Ayarlar.ini)",
+    "port": 5454,
+    "database": "tebeos_db",
+    "username": "tebeos",
+    "data_dir": "<install>/data",
+    "conf_templates": [
+      "<install>/conf/pg_hba.conf.dist",
+      "<install>/trust/pg_hba.conf.dist"
+    ],
+    "base_schema_file": "<install>/sql/tebeos_db.sql (127 MB, server installer only)",
+    "schema_after_load": {
+      "schemas": 44,
+      "tables": 317,
+      "functions": 2018
+    }
+  },
+  "ini_file": {
+    "path": "<install>/app/Ayarlar.ini",
+    "encoding_trap": "code reads section 'CONNECTİON' with Turkish dotted capital I (U+0130); vendor ships '[CONNECTION]' with ASCII I -> lookup misses -> empty IP -> crash. Write both UTF-8 (C4 B0) and CP1254 (DD) variants.",
+    "keys": {
+      "CONNECTİON.CLIENT": "server (main computer) address",
+      "BAGLANTI.CLIENT": "TRUE = this PC is a terminal/client, FALSE = this PC is the main computer",
+      "HOSTNAME.ANABILGISAYAR": "name of the main computer",
+      "LOGIN_KULLANICI.KULLANICI": "'remember me' user name",
+      "LOGIN_KULLANICI.SIFRE": "'remember me' password"
+    }
+  },
+  "roles": {
+    "main_computer": {
+      "BAGLANTI.CLIENT": "FALSE",
+      "Host": "127.0.0.1",
+      "runs": "PostgreSQL + app"
+    },
+    "terminal": {
+      "BAGLANTI.CLIENT": "TRUE",
+      "Host": "<main computer LAN IP>",
+      "runs": "app only"
+    }
+  },
+  "known_bugs": [
+    {
+      "id": 1,
+      "where": "Ayarlar.ini section name",
+      "effect": "FormatException 'An invalid IP address was specified' at start-up",
+      "fix": "use the Turkish dotted I in the section name (both encodings)"
+    },
+    {
+      "id": 2,
+      "where": "tebeos_utilities.Scanner.VeritabaniPortAcikmi",
+      "effect": "returns true even when the TCP connect is refused (treats async completion as success)",
+      "fix": "cannot patch vendor binary; avoid the empty-IP state"
+    },
+    {
+      "id": 3,
+      "where": "conf/postgresql.conf.dist",
+      "effect": "lc_messages/lc_monetary/lc_numeric/lc_time = 'tr_TR.UTF-8' (Linux locale names) -> Windows PostgreSQL refuses to start",
+      "fix": "set them to 'C'"
+    },
+    {
+      "id": 4,
+      "where": "both Inno Setup installers",
+      "effect": "/VERYSILENT aborts with 'Failed to proceed to next wizard page'",
+      "fix": "install via the visible GUI"
+    },
+    {
+      "id": 5,
+      "where": "Wizard.exe (vendor server wizard)",
+      "effect": "exits immediately under Wine, does nothing",
+      "fix": "reproduce server.bat steps manually"
+    },
+    {
+      "id": 6,
+      "where": "install-tebeos-client.sh (script env + generated launcher)",
+      "effect": "WINEDLLOVERRIDES='mscoree,mshtml=' has an EMPTY load order = disabled -> Wine: 'mscoree.dll not found', 'IL-only binary tebeos_plus.exe cannot be loaded', exit 53; also makes the script's own 30s test launch fail with an empty testlaunch.log",
+      "fix": "use WINEDLLOVERRIDES='mscoree=n' and leave mshtml ENABLED (see id 9) -- mscoree must be native, and the env var overrides winetricks' registry '*mscoree=native'"
+    },
+    {
+      "id": 7,
+      "where": "Ayarlar.ini + host locale (the 'Beni Hatirla' password)",
+      "effect": "the INI is written through the ANSI profile API; Wine takes that codepage from the HOST LOCALE (registry ACP is ignored). On an en_US host the codepage is 1252, which has no 'g-with-breve', so best-fit mapping stores 'gu' where the user typed 'g-breve u' -> the remembered password is refused and must be retyped every time",
+      "fix": "run the app with LC_ALL=tr_TR.UTF-8 (codepage 1254); the installer auto-detects a Turkish locale and puts it in the launcher. Verified: remembered password logs in with no typing"
+    },
+    {
+      "id": 8,
+      "where": "Wine's bundled fonts (tahoma.ttf, tahomabd.ttf, arial.ttf) and the fonts winetricks installs",
+      "effect": "no U+20BA TURKISH LIRA SIGN -> every money amount in the UI is drawn as '1.234,56' + tofu box (the corefonts/tahoma winetricks ships are XP-era and lack it too)",
+      "fix": "fonts/ in this repo holds Wine's three files with the glyph grafted in; patch-wine-fonts.py grafts it in place into the prefix's real Tahoma/Arial (donor Noto Sans rescaled to the target units-per-em, so metrics/family names are unchanged). The installer does both; originals kept in <wine>/share/wine/fonts/orig/"
+    },
+    {
+      "id": 9,
+      "where": "Medula window (Wine ieframe + mshtml)",
+      "effect": "window opens with its toolbar but the content pane stays blank: ieframe never creates an HTML document and mshtml.dll is never loaded",
+      "fix": "MSHTML's classes were missing from the 32-BIT registry view (Software\\Classes\\Wow6432Node\\CLSID). Install wine-gecko 2.47.4 (x86 + x86_64) and run 'regsvr32 /s C:\\windows\\syswow64\\mshtml.dll'; keep mshtml ENABLED. Verified: the SGK Medula login page renders"
+    },
+    {
+      "id": 10,
+      "where": "the app's 'System' font requests + fontconfig",
+      "effect": "'fonts look off': TEBEOS asks for 'System' ~9000x per session and Wine resolves unknown families through fontconfig -> it came back as Noto Sans while 'Tahoma' was Wine's own clone, so the UI mixed two typefaces",
+      "fix": "install real Windows fonts (winetricks corefonts tahoma) and add the substitution 'System' -> 'Tahoma'; the installer does both"
+    },
+    {
+      "id": 11,
+      "where": "Medula login - the captcha ('Guvenlik Anahtari') field",
+      "effect": "the field swallows EVERY keystroke, so the Medula login can never be completed. The page runs `if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;` and Wine's MSHTML returns keyCode=0 for keypress (Gecko fills keyCode only for keydown/keyup; wine-gecko 2.47.4 = Firefox 47 predates the 2018 charCode->keyCode mirroring), so 0<48 and every key is cancelled",
+      "fix": "FIXED with a rebuilt mshtml.dll (wine-patch/ in this repo; install-tebeos-client.sh applies it): 5 lines in dlls/mshtml/htmlevent.c make DOMKeyboardEvent_get_keyCode() use the character code for keypress when Gecko reports 0 - what IE does and what Chrome/Firefox have done since 2018. Verified with a minimal page under wine iexplore: before, the field swallowed input and the handler saw keyCode=0; after, the field accepts input and the handler sees keyCode=51. Build recipe: wine-patch/README.md (llvm-mingw, no root). The app's own automation was always fine - it fills user, password and ticks the KVKK box"
+    }
+  ],
+  "wine_environment": {
+    "tested": "Wine 11.2 Staging (Lutris runner build) on CachyOS",
+    "prefix": "win64 (system32 + syswow64), Windows 7 SP1 (6.1.7601)",
+    "dotnet": ".NET Framework 4.8 (winetricks dotnet48), vcrun2019",
+    "32bit_probe": "wine 'C:\\windows\\syswow64\\cmd.exe' /c \"echo ok32\"  -> must print ok32",
+    "portable_wine_source": "https://github.com/Kron4ek/Wine-Builds/releases (…-staging-amd64-wow64.tar.xz)",
+    "verified_again": "2026-09-30 on CachyOS, Wine 11.18 staging (Kron4ek wow64), client/terminal role against a live server on the LAN (db.vers 1.4.1.2): login window reached"
+  },
+  "_stale_fields": {
+    "note": "the values below were true for the first machine; the 2026-09-30 client observed newer ones",
+    "project_version_observed": "1.2.9.9 (vs 1.2.9.3 in app.project_version_verified)",
+    "db_schema_version_observed": "1.4.1.2 (vs 1.3.8.0 in app.db_schema_version_verified)",
+    "login_screen_roles": "three radio options: Bu Bilgisayar / Ana Bilgisayar / Terminal"
+  },
+  "vendor_urls": {
+    "client_installer": "https://eczacilar-p.mncdn.com/Setup/tebeos_plus_client_setup_v1.exe",
+    "server_installer": "https://eczacilar-p.mncdn.com/Setup/tebeos_plus_setup.exe",
+    "server_installer_x86": "https://eczacilar-p.mncdn.com/Setup/tebeos_plus_setup_32.exe",
+    "update_manifest": "http://tebeosplus.teb.org.tr:8001/version/main.xml",
+    "site": "http://tebeos.teb.org.tr"
+  },
+  "windows_server_requirement": "allow inbound TCP 5454; give the PC a static IP / DHCP reservation",
+  "medula": {
+    "window_technology": "NOT CefSharp for this window -- a legacy Microsoft Web Browser (Internet Explorer) ActiveX control, i.e. Wine's ieframe, rendered by MSHTML + wine-gecko (Gecko = Firefox's engine)",
+    "navigates_to": "https://medeczane.sgk.gov.tr/eczane/faces/login.jsp",
+    "launched_as": "tebeos_medula.exe <username> <password>   (password visible in ps / /proc/*/cmdline)",
+    "symptom_under_wine": "window opens with its toolbar, content pane stays blank",
+    "root_cause": "MSHTML's classes were missing from the 32-bit registry view, so ieframe could not create an HTML document and mshtml.dll was never loaded (wine-gecko alone changed nothing)",
+    "fix": "install wine-gecko 2.47.4 (x86 + x86_64, the version this Wine build asks for), then regsvr32 /s C:\\windows\\syswow64\\mshtml.dll and keep mshtml enabled. Both steps are in install-tebeos-client.sh. Verified: the SGK Medula login page renders",
+    "engine_caveat": "Wine has no Trident (real IE); Gecko 2.47 = Firefox 47 (2016) is the substitute, so individual screens may render differently than under real IE",
+    "e_imza": "not needed for pharmacists (that is the physicians' side of Medula); the app only probes for ArkSigner/ArkSignerBEs",
+    "captcha_field": "BLOCKED on Wine: the captcha field swallows every keystroke (see bug 11), so the login cannot be completed from the app under Wine. Not an app bug - Wine's MSHTML reports keyCode=0 for keypress and SGK's onlyNumbers() filter cancels anything outside 48..57",
+    "still_untested": "everything after the login: whether the vendor's IE-style DOM automation drives the site correctly on Gecko"
+  },
+  "open_items": [
+    "backup/restore round-trip (Yedek Al / Geri Yukle) not tested",
+    "TebeosBackupIndirme.exe (downloads the pharmacy's backup?) unexplored",
+    "online update flow: on 2026-09-30 the app updated itself (project 1.2.9.9 -> 1.3.1.8) but logged '23505 duplicate key ... exeversion_version_key' and a Wine COM/WMI error in GuncellemeLog/Tebeos_2026.09.30.log",
+    "Medula beyond the login page: how far the vendor's automation gets on Gecko 2.47 (vs Trident) is untested"
+  ]
+}

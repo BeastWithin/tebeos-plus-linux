@@ -1,0 +1,270 @@
+# Wine 11.18 mshtml fixes needed for TEBEOS' Medula integration
+# 1) IHTMLElementRender (DrawToDC)   - interface was missing entirely; renders the
+#    element's current pixels by forcing a synchronous Gecko repaint
+#    (nsIDOMWindowUtils::Redraw) and blitting the element's viewport rectangle.
+# 2) HTMLElement_setAttribute("value",...)" on <input> mirrors to the value
+#    *property* (Gecko never reflects it into type=password) - fixes the password.
+# 3) HTMLElement_getAttribute        - return the raw attribute (IE8+ behaviour)
+# 4) DOMKeyboardEvent_get_keyCode    - char code on keypress (IE behaviour)
+# 5) HTMLImgElement_get_href         - alias of src (was E_NOTIMPL)
+
+--- dlls/mshtml/mshtml_private_iface.idl	2026-09-18 23:36:23.000000000 +0300
++++ dlls/mshtml/mshtml_private_iface.idl	2026-10-07 10:35:40.740007950 +0300
+@@ -261,6 +261,20 @@
+     HRESULT classList([retval, out] IDispatch **class_list);
+ }
+ 
++/* The IE interface used to snapshot a rendered element - TEBEOS calls it on the
++ * SGK Medula captcha <img> and then OCRs the result.  Plain IUnknown; IE passes
++ * an HDC (declared void* because this IDL has no HDC type). */
++[
++    object,
++    local,
++    uuid(3050f669-98b5-11cf-bb82-00aa00bdce0b)
++]
++interface IHTMLElementRender : IUnknown
++{
++    HRESULT DrawToDC([in] void *hdc);
++    HRESULT SetDocumentPrinter([in] BSTR bstrPrinterName, [in] void *hdc);
++}
++
+ const long DISPID_IWINEHTMLFORMPRIVATE_NOVALIDATE = 51;
+ const long DISPID_IWINEHTMLFORMPRIVATE_CHECKVALIDITY = 52;
+ [
+--- dlls/mshtml/mshtml_private.h	2026-09-18 23:36:23.000000000 +0300
++++ dlls/mshtml/mshtml_private.h	2026-10-07 10:35:40.740673075 +0300
+@@ -1091,6 +1091,7 @@
+     IElementTraversal IElementTraversal_iface;
+     IProvideMultipleClassInfo IProvideMultipleClassInfo_iface;
+     IWineHTMLElementPrivate IWineHTMLElementPrivate_iface;
++    IHTMLElementRender IHTMLElementRender_iface;
+ 
+     nsIDOMElement *dom_element;       /* NULL for legacy comments represented as HTML elements */
+     nsIDOMHTMLElement *html_element;  /* NULL for non-HTML elements (like SVG elements) */
+--- dlls/mshtml/htmlelem.c	2026-09-18 23:36:23.000000000 +0300
++++ dlls/mshtml/htmlelem.c	2026-10-07 11:22:07.667874769 +0300
+@@ -34,6 +34,7 @@
+ #include "mshtml_private.h"
+ #include "htmlevent.h"
+ #include "htmlstyle.h"
++#include "htmlscript.h"
+ 
+ WINE_DEFAULT_DEBUG_CHANNEL(mshtml);
+ 
+@@ -1076,6 +1077,21 @@
+     nsAString_InitDepend(&name_str, strAttributeName);
+     nsres = nsIDOMElement_SetAttribute(This->dom_element, &name_str, &value_str);
+     nsAString_Finish(&name_str);
++
++    /* IE's setAttribute("value", ...) sets the value *property*.  Gecko never
++     * reflects the value attribute into a type=password input's value (security),
++     * so mirror it manually for input elements - TEBEOS fills the SGK Medula
++     * password field exactly this way. */
++    if(SUCCEEDED(nsres) && !lstrcmpiW(strAttributeName, L"value")) {
++        nsIDOMHTMLInputElement *input = NULL;
++        nsresult qres = nsIDOMElement_QueryInterface(This->dom_element,
++                &IID_nsIDOMHTMLInputElement, (void **)&input);
++        if(SUCCEEDED(qres) && input) {
++            nsIDOMHTMLInputElement_SetValue(input, &value_str);
++            nsIDOMHTMLInputElement_Release(input);
++        }
++    }
++
+     nsAString_Finish(&value_str);
+     if(NS_FAILED(nsres))
+         WARN("SetAttribute failed: %08lx\n", nsres);
+@@ -1135,7 +1151,12 @@
+     if(lFlags & ~(ATTRFLAG_CASESENSITIVE|ATTRFLAG_ASSTRING))
+         FIXME("Unsupported flags %lx\n", lFlags);
+ 
+-    if(compat_mode < COMPAT_MODE_IE9 || !This->dom_element) {
++    /* Return the raw attribute value, as IE8+ does.  The pre-IE9 path returned the
++     * *property* value instead, which for URL attributes (e.g. <form action>)
++     * yields an absolute URL - apps that match the attribute text, like TEBEOS'
++     * Medula state machine (switch (Url) { case "/eczane/faces/login.jsp": ... }),
++     * then never match anything. */
++    if(!This->dom_element) {
+         hres = dispex_get_id(&This->node.event_target.dispex, translate_attr_name(strAttributeName, compat_mode),
+                              lFlags & ATTRFLAG_CASESENSITIVE ? fdexNameCaseSensitive : fdexNameCaseInsensitive, &dispid);
+         if(FAILED(hres)) {
+@@ -5971,6 +5992,122 @@
+     ProvideMultipleClassInfo_GetInfoOfIndex
+ };
+ 
++static inline HTMLElement *impl_from_IHTMLElementRender(IHTMLElementRender *iface)
++{
++    return CONTAINING_RECORD(iface, HTMLElement, IHTMLElementRender_iface);
++}
++
++static HRESULT WINAPI HTMLElementRender_QueryInterface(IHTMLElementRender *iface, REFIID riid, void **ppv)
++{
++    HTMLElement *This = impl_from_IHTMLElementRender(iface);
++
++    return IHTMLElement_QueryInterface(&This->IHTMLElement_iface, riid, ppv);
++}
++
++static ULONG WINAPI HTMLElementRender_AddRef(IHTMLElementRender *iface)
++{
++    HTMLElement *This = impl_from_IHTMLElementRender(iface);
++
++    return IHTMLElement_AddRef(&This->IHTMLElement_iface);
++}
++
++static ULONG WINAPI HTMLElementRender_Release(IHTMLElementRender *iface)
++{
++    HTMLElement *This = impl_from_IHTMLElementRender(iface);
++
++    return IHTMLElement_Release(&This->IHTMLElement_iface);
++}
++
++/* IE's IHTMLElementRender::DrawToDC renders an element's pixels into the given
++ * DC.  TEBEOS calls it on the SGK Medula captcha <img> and then OCRs the result,
++ * so the pixels must be the element's *current* already-decoded image.
++ *
++ * wine-gecko exposes no XML-visible way to read a decoded image's pixels (canvas
++ * is JS-only and Wine's DOM wrappers don't implement it, imgIContainer::getFrame
++ * returns an opaque moz2d SourceSurface, and a dynamically appended <script> runs
++ * asynchronously so it cannot fill the DC synchronously), and re-fetching the
++ * SayiUretenImageYeniServlet URL regenerates a different captcha.  So, like IE's
++ * own rendering, we force Gecko to synchronously paint its current content into
++ * the browser window (nsIDOMWindowUtils::Redraw) and then blit the element's
++ * exact viewport rectangle out of that surface - the same already-decoded image
++ * with no stale frame and no off-by-one coordinate error.
++ */
++
++static HRESULT WINAPI HTMLElementRender_DrawToDC(IHTMLElementRender *iface, void *hdc_arg)
++{
++    HTMLElement *This = impl_from_IHTMLElementRender(iface);
++    HTMLOuterWindow *outer;
++    nsIDOMWindowUtils *window_utils = NULL;
++    nsIDOMClientRect *rect = NULL;
++    UINT32 redrawn = 0;
++    HDC hdc = hdc_arg, srcdc;
++    HWND hwnd;
++    float left = 0, top = 0, width = 0, height = 0;
++    int x, y, w, h;
++    nsresult nsres;
++
++    TRACE("(%p)->(%p)\n", This, hdc_arg);
++
++    if(!hdc || !This->dom_element || !This->node.doc || !This->node.doc->window)
++        return E_FAIL;
++
++    outer = This->node.doc->window->base.outer_window;
++    if(!outer || !outer->nswindow)
++        return E_FAIL;
++
++    /* Force a synchronous paint so the window surface holds the element's current
++     * image rather than a stale/previous captcha frame. */
++    get_nsinterface((nsISupports*)outer->nswindow, &IID_nsIDOMWindowUtils, (void**)&window_utils);
++    if(window_utils) {
++        nsIDOMWindowUtils_Redraw(window_utils, 1, &redrawn);
++        nsIDOMWindowUtils_Release(window_utils);
++    }
++
++    nsres = nsIDOMElement_GetBoundingClientRect(This->dom_element, &rect);
++    if(NS_FAILED(nsres) || !rect)
++        return E_FAIL;
++
++    nsIDOMClientRect_GetLeft(rect, &left);
++    nsIDOMClientRect_GetTop(rect, &top);
++    nsIDOMClientRect_GetWidth(rect, &width);
++    nsIDOMClientRect_GetHeight(rect, &height);
++    nsIDOMClientRect_Release(rect);
++
++    x = (int)(left + 0.5f);
++    y = (int)(top + 0.5f);
++    w = (int)(width + 0.5f);
++    h = (int)(height + 0.5f);
++    if(w <= 0 || h <= 0)
++        return E_FAIL;
++
++    hwnd = outer->browser ? outer->browser->hwnd : NULL;
++    if(!hwnd || !IsWindow(hwnd))
++        return E_FAIL;
++
++    srcdc = GetDC(hwnd);
++    if(!srcdc)
++        return E_FAIL;
++
++    TRACE("blitting %dx%d from (%d,%d)\n", w, h, x, y);
++    BitBlt(hdc, 0, 0, w, h, srcdc, x, y, SRCCOPY);
++    ReleaseDC(hwnd, srcdc);
++    return S_OK;
++}
++
++static HRESULT WINAPI HTMLElementRender_SetDocumentPrinter(IHTMLElementRender *iface, BSTR printer, void *hdc)
++{
++    FIXME("(%p)->(%s %p): stub\n", impl_from_IHTMLElementRender(iface), debugstr_w(printer), hdc);
++    return E_NOTIMPL;
++}
++
++static const IHTMLElementRenderVtbl HTMLElementRenderVtbl = {
++    HTMLElementRender_QueryInterface,
++    HTMLElementRender_AddRef,
++    HTMLElementRender_Release,
++    HTMLElementRender_DrawToDC,
++    HTMLElementRender_SetDocumentPrinter
++};
++
+ static inline HTMLElement *impl_from_IElementTraversal(IElementTraversal *iface)
+ {
+     return CONTAINING_RECORD(iface, HTMLElement, IElementTraversal_iface);
+@@ -6202,6 +6339,8 @@
+         return &This->IProvideMultipleClassInfo_iface;
+     if(IsEqualGUID(&IID_IWineHTMLElementPrivate, riid))
+         return &This->IWineHTMLElementPrivate_iface;
++    if(IsEqualGUID(&IID_IHTMLElementRender, riid))
++        return &This->IHTMLElementRender_iface;
+ 
+     return HTMLDOMNode_query_interface(&This->node.event_target.dispex, riid);
+ }
+@@ -7434,6 +7573,7 @@
+     This->IElementTraversal_iface.lpVtbl = &ElementTraversalVtbl;
+     This->IProvideMultipleClassInfo_iface.lpVtbl = &ProvideMultipleClassInfoVtbl;
+     This->IWineHTMLElementPrivate_iface.lpVtbl = &WineHTMLElementPrivateVtbl;
++    This->IHTMLElementRender_iface.lpVtbl = &HTMLElementRenderVtbl;
+ 
+     if(nselem) {
+         nsIDOMHTMLElement *html_element;
+--- dlls/mshtml/htmlevent.c	2026-09-18 23:36:23.000000000 +0300
++++ dlls/mshtml/htmlevent.c	2026-10-07 10:35:40.745043900 +0300
+@@ -2912,6 +2912,17 @@
+     if(NS_FAILED(nsres))
+         return E_FAIL;
+ 
++    /* IE puts the character code in keyCode for keypress events.  Gecko only
++     * fills keyCode for keydown/keyup and leaves it 0 for keypress, where the
++     * character is in charCode instead.  IE-era code such as
++     *     if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;
++     * would otherwise cancel every keystroke. */
++    if(!r && This->ui_event.event.event_id == EVENTID_KEYPRESS) {
++        nsres = nsIDOMKeyEvent_GetCharCode(This->nsevent, &r);
++        if(NS_FAILED(nsres))
++            return E_FAIL;
++    }
++
+     *p = r;
+     return S_OK;
+ }
+--- dlls/mshtml/htmlimg.c	2026-09-18 23:36:23.000000000 +0300
++++ dlls/mshtml/htmlimg.c	2026-10-07 10:35:40.746322106 +0300
+@@ -142,11 +142,15 @@
+     return E_NOTIMPL;
+ }
+ 
++static HRESULT WINAPI HTMLImgElement_get_src(IHTMLImgElement *iface, BSTR *p);
++
+ static HRESULT WINAPI HTMLImgElement_get_href(IHTMLImgElement *iface, BSTR *p)
+ {
+-    HTMLImg *This = impl_from_IHTMLImgElement(iface);
+-    FIXME("(%p)->(%p)\n", This, p);
+-    return E_NOTIMPL;
++    /* IE exposes img.href as an alias of img.src (the resolved URL).  TEBEOS
++     * matches the SGK captcha image with  pk.href.ToString().Contains(
++     * "SayiUretenImageYeniServlet"),  and E_NOTIMPL here aborted its LINQ and
++     * silently left the captcha empty. */
++    return HTMLImgElement_get_src(iface, p);
+ }
+ 
+ static HRESULT WINAPI HTMLImgElement_get_nameProp(IHTMLImgElement *iface, BSTR *p)

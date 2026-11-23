@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:ns0="http://servisler.ws.eczane.gss.sgk.gov.tr" targetNamespace="http://servisler.ws.eczane.gss.sgk.gov.tr">
+<wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema>
+<xsd:import schemaLocation="saglikTesisiYardimciIslemleriWS.xsd2.xsd" namespace="http://servisler.ws.eczane.gss.sgk.gov.tr"/></xsd:schema></wsdl:types>
+<wsdl:message name="aktifIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:aktifIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="aktifIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:aktifIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="aktifYurtdisiIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:aktifYurtdisiIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="aktifYurtdisiIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:aktifYurtdisiIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="etkinMaddeListesiSorgula">
+<wsdl:part name="parameters" element="xsns:etkinMaddeListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="etkinMaddeListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:etkinMaddeListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="etkinMaddeSutListesiSorgula">
+<wsdl:part name="parameters" element="xsns:etkinMaddeSutListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="etkinMaddeSutListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:etkinMaddeSutListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="kirmiziReceteIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:kirmiziReceteIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="kirmiziReceteIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:kirmiziReceteIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="kirmiziReceteYurtdisiIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:kirmiziReceteYurtdisiIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="kirmiziReceteYurtdisiIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:kirmiziReceteYurtdisiIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="morReceteIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:morReceteIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="morReceteIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:morReceteIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="morReceteYurtdisiIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:morReceteYurtdisiIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="morReceteYurtdisiIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:morReceteYurtdisiIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="normalReceteIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:normalReceteIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="normalReceteIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:normalReceteIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="normalReceteYurtdisiIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:normalReceteYurtdisiIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="normalReceteYurtdisiIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:normalReceteYurtdisiIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="pasifIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:pasifIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="pasifIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:pasifIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="pasifYurtdisiIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:pasifYurtdisiIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="pasifYurtdisiIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:pasifYurtdisiIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="raporTeshisListesiSorgula">
+<wsdl:part name="parameters" element="xsns:raporTeshisListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="raporTeshisListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:raporTeshisListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="turuncuReceteIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:turuncuReceteIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="turuncuReceteIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:turuncuReceteIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="turuncuReceteYurtdisiIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:turuncuReceteYurtdisiIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="turuncuReceteYurtdisiIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:turuncuReceteYurtdisiIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="yesilReceteIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:yesilReceteIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="yesilReceteIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:yesilReceteIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="yesilReceteYurtdisiIlacListesiSorgula">
+<wsdl:part name="parameters" element="xsns:yesilReceteYurtdisiIlacListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="yesilReceteYurtdisiIlacListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:yesilReceteYurtdisiIlacListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="yurtdisiIlacEtkinMaddeListesiSorgula">
+<wsdl:part name="parameters" element="xsns:yurtdisiIlacEtkinMaddeListesiSorgula" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="yurtdisiIlacEtkinMaddeListesiSorgulaResponse">
+<wsdl:part name="parameters" element="xsns:yurtdisiIlacEtkinMaddeListesiSorgulaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:portType name="SaglikTesisiYardimciIslemleri">
+<wsdl:operation name="aktifIlacListesiSorgula">
+<wsdl:input name="aktifIlacListesiSorgulaRequest" message="ns0:aktifIlacListesiSorgula"/>
+<wsdl:output name="aktifIlacListesiSorgulaResponse" message="ns0:aktifIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="aktifYurtdisiIlacListesiSorgula">
+<wsdl:input name="aktifYurtdisiIlacListesiSorgulaRequest" message="ns0:aktifYurtdisiIlacListesiSorgula"/>
+<wsdl:output name="aktifYurtdisiIlacListesiSorgulaResponse" message="ns0:aktifYurtdisiIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="etkinMaddeListesiSorgula">
+<wsdl:input name="etkinMaddeListesiSorgulaRequest" message="ns0:etkinMaddeListesiSorgula"/>
+<wsdl:output name="etkinMaddeListesiSorgulaResponse" message="ns0:etkinMaddeListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="etkinMaddeSutListesiSorgula">
+<wsdl:input name="etkinMaddeSutListesiSorgulaRequest" message="ns0:etkinMaddeSutListesiSorgula"/>
+<wsdl:output name="etkinMaddeSutListesiSorgulaResponse" message="ns0:etkinMaddeSutListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="kirmiziReceteIlacListesiSorgula">
+<wsdl:input name="kirmiziReceteIlacListesiSorgulaRequest" message="ns0:kirmiziReceteIlacListesiSorgula"/>
+<wsdl:output name="kirmiziReceteIlacListesiSorgulaResponse" message="ns0:kirmiziReceteIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="kirmiziReceteYurtdisiIlacListesiSorgula">
+<wsdl:input name="kirmiziReceteYurtdisiIlacListesiSorgulaRequest" message="ns0:kirmiziReceteYurtdisiIlacListesiSorgula"/>
+<wsdl:output name="kirmiziReceteYurtdisiIlacListesiSorgulaResponse" message="ns0:kirmiziReceteYurtdisiIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="morReceteIlacListesiSorgula">
+<wsdl:input name="morReceteIlacListesiSorgulaRequest" message="ns0:morReceteIlacListesiSorgula"/>
+<wsdl:output name="morReceteIlacListesiSorgulaResponse" message="ns0:morReceteIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="morReceteYurtdisiIlacListesiSorgula">
+<wsdl:input name="morReceteYurtdisiIlacListesiSorgulaRequest" message="ns0:morReceteYurtdisiIlacListesiSorgula"/>
+<wsdl:output name="morReceteYurtdisiIlacListesiSorgulaResponse" message="ns0:morReceteYurtdisiIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="normalReceteIlacListesiSorgula">
+<wsdl:input name="normalReceteIlacListesiSorgulaRequest" message="ns0:normalReceteIlacListesiSorgula"/>
+<wsdl:output name="normalReceteIlacListesiSorgulaResponse" message="ns0:normalReceteIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="normalReceteYurtdisiIlacListesiSorgula">
+<wsdl:input name="normalReceteYurtdisiIlacListesiSorgulaRequest" message="ns0:normalReceteYurtdisiIlacListesiSorgula"/>
+<wsdl:output name="normalReceteYurtdisiIlacListesiSorgulaResponse" message="ns0:normalReceteYurtdisiIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="pasifIlacListesiSorgula">
+<wsdl:input name="pasifIlacListesiSorgulaRequest" message="ns0:pasifIlacListesiSorgula"/>
+<wsdl:output name="pasifIlacListesiSorgulaResponse" message="ns0:pasifIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="pasifYurtdisiIlacListesiSorgula">
+<wsdl:input name="pasifYurtdisiIlacListesiSorgulaRequest" message="ns0:pasifYurtdisiIlacListesiSorgula"/>
+<wsdl:output name="pasifYurtdisiIlacListesiSorgulaResponse" message="ns0:pasifYurtdisiIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="raporTeshisListesiSorgula">
+<wsdl:input name="raporTeshisListesiSorgulaRequest" message="ns0:raporTeshisListesiSorgula"/>
+<wsdl:output name="raporTeshisListesiSorgulaResponse" message="ns0:raporTeshisListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="turuncuReceteIlacListesiSorgula">
+<wsdl:input name="turuncuReceteIlacListesiSorgulaRequest" message="ns0:turuncuReceteIlacListesiSorgula"/>
+<wsdl:output name="turuncuReceteIlacListesiSorgulaResponse" message="ns0:turuncuReceteIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="turuncuReceteYurtdisiIlacListesiSorgula">
+<wsdl:input name="turuncuReceteYurtdisiIlacListesiSorgulaRequest" message="ns0:turuncuReceteYurtdisiIlacListesiSorgula"/>
+<wsdl:output name="turuncuReceteYurtdisiIlacListesiSorgulaResponse" message="ns0:turuncuReceteYurtdisiIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="yesilReceteIlacListesiSorgula">
+<wsdl:input name="yesilReceteIlacListesiSorgulaRequest" message="ns0:yesilReceteIlacListesiSorgula"/>
+<wsdl:output name="yesilReceteIlacListesiSorgulaResponse" message="ns0:yesilReceteIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="yesilReceteYurtdisiIlacListesiSorgula">
+<wsdl:input name="yesilReceteYurtdisiIlacListesiSorgulaRequest" message="ns0:yesilReceteYurtdisiIlacListesiSorgula"/>
+<wsdl:output name="yesilReceteYurtdisiIlacListesiSorgulaResponse" message="ns0:yesilReceteYurtdisiIlacListesiSorgulaResponse"/></wsdl:operation>
+<wsdl:operation name="yurtdisiIlacEtkinMaddeListesiSorgula">
+<wsdl:input name="yurtdisiIlacEtkinMaddeListesiSorgulaRequest" message="ns0:yurtdisiIlacEtkinMaddeListesiSorgula"/>
+<wsdl:output name="yurtdisiIlacEtkinMaddeListesiSorgulaResponse" message="ns0:yurtdisiIlacEtkinMaddeListesiSorgulaResponse"/></wsdl:operation></wsdl:portType>
+<wsdl:binding name="SaglikTesisiYardimciIslemleriPortBinding" type="ns0:SaglikTesisiYardimciIslemleri">
+<soap11:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="aktifIlacListesiSorgula">
+<soap11:operation soapAction="aktifIlacListesiSorgula" style="document"/>
+<wsdl:input name="aktifIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="aktifIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="aktifYurtdisiIlacListesiSorgula">
+<soap11:operation soapAction="aktifYurtdisiIlacListesiSorgula" style="document"/>
+<wsdl:input name="aktifYurtdisiIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="aktifYurtdisiIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="etkinMaddeListesiSorgula">
+<soap11:operation soapAction="etkinMaddeListesiSorgula" style="document"/>
+<wsdl:input name="etkinMaddeListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="etkinMaddeListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="etkinMaddeSutListesiSorgula">
+<soap11:operation soapAction="etkinMaddeSutListesiSorgula" style="document"/>
+<wsdl:input name="etkinMaddeSutListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="etkinMaddeSutListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="kirmiziReceteIlacListesiSorgula">
+<soap11:operation soapAction="kirmiziReceteIlacListesiSorgula" style="document"/>
+<wsdl:input name="kirmiziReceteIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="kirmiziReceteIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="kirmiziReceteYurtdisiIlacListesiSorgula">
+<soap11:operation soapAction="kirmiziReceteYurtdisiIlacListesiSorgula" style="document"/>
+<wsdl:input name="kirmiziReceteYurtdisiIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="kirmiziReceteYurtdisiIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="morReceteIlacListesiSorgula">
+<soap11:operation soapAction="morReceteIlacListesiSorgula" style="document"/>
+<wsdl:input name="morReceteIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="morReceteIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="morReceteYurtdisiIlacListesiSorgula">
+<soap11:operation soapAction="morReceteYurtdisiIlacListesiSorgula" style="document"/>
+<wsdl:input name="morReceteYurtdisiIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="morReceteYurtdisiIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="normalReceteIlacListesiSorgula">
+<soap11:operation soapAction="normalReceteIlacListesiSorgula" style="document"/>
+<wsdl:input name="normalReceteIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="normalReceteIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="normalReceteYurtdisiIlacListesiSorgula">
+<soap11:operation soapAction="normalReceteYurtdisiIlacListesiSorgula" style="document"/>
+<wsdl:input name="normalReceteYurtdisiIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="normalReceteYurtdisiIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="pasifIlacListesiSorgula">
+<soap11:operation soapAction="pasifIlacListesiSorgula" style="document"/>
+<wsdl:input name="pasifIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="pasifIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="pasifYurtdisiIlacListesiSorgula">
+<soap11:operation soapAction="pasifYurtdisiIlacListesiSorgula" style="document"/>
+<wsdl:input name="pasifYurtdisiIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="pasifYurtdisiIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="raporTeshisListesiSorgula">
+<soap11:operation soapAction="raporTeshisListesiSorgula" style="document"/>
+<wsdl:input name="raporTeshisListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="raporTeshisListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="turuncuReceteIlacListesiSorgula">
+<soap11:operation soapAction="turuncuReceteIlacListesiSorgula" style="document"/>
+<wsdl:input name="turuncuReceteIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="turuncuReceteIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="turuncuReceteYurtdisiIlacListesiSorgula">
+<soap11:operation soapAction="turuncuReceteYurtdisiIlacListesiSorgula" style="document"/>
+<wsdl:input name="turuncuReceteYurtdisiIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="turuncuReceteYurtdisiIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="yesilReceteIlacListesiSorgula">
+<soap11:operation soapAction="yesilReceteIlacListesiSorgula" style="document"/>
+<wsdl:input name="yesilReceteIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="yesilReceteIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="yesilReceteYurtdisiIlacListesiSorgula">
+<soap11:operation soapAction="yesilReceteYurtdisiIlacListesiSorgula" style="document"/>
+<wsdl:input name="yesilReceteYurtdisiIlacListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="yesilReceteYurtdisiIlacListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation>
+<wsdl:operation name="yurtdisiIlacEtkinMaddeListesiSorgula">
+<soap11:operation soapAction="yurtdisiIlacEtkinMaddeListesiSorgula" style="document"/>
+<wsdl:input name="yurtdisiIlacEtkinMaddeListesiSorgulaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="yurtdisiIlacEtkinMaddeListesiSorgulaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation></wsdl:binding>
+<wsdl:service name="SaglikTesisiYardimciIslemleriService">
+<wsdl:port name="SaglikTesisiYardimciIslemleriPort" binding="ns0:SaglikTesisiYardimciIslemleriPortBinding">
+<soap11:address location="https://medeczane.sgk.gov.tr:443/medula/eczane/saglikTesisiYardimciIslemleriWS"/></wsdl:port></wsdl:service></wsdl:definitions>

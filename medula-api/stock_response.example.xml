@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC example. Same structure and value formats as a real gunlukStokBilgisiSorgulama
+     response (element order: receteListesi*, receteIlacListesi*, receteSilinenListesi*,
+     receteKarekodListesi*), but every value is made up: prescription numbers, drugs,
+     barcodes, serial/batch numbers and amounts. A real response comes on one line and can hold dozens of prescriptions. -->
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+<soapenv:Body>
+<ns2:gunlukStokBilgisiSorgulamaResponse xmlns:ns2="http://servisler.ws.eczane.gss.sgk.gov.tr">
+<gunlukStokBilgisiSorgulamaReturn>
+  <sonucKodu>0000</sonucKodu>
+  <sonucMesaji>İşlem başarı ile sona erdi.</sonucMesaji>
+  <uyariMesaji></uyariMesaji>
+
+  <receteListesi>
+    <receteNo>0AAAAA1</receteNo>
+    <receteTarihi>01.01.2026</receteTarihi>
+    <ilacAlimTarihi>01.01.2026</ilacAlimTarihi>
+    <kapsamTuru>1</kapsamTuru>
+    <receteTuru>1</receteTuru>
+    <karekodVar>E</karekodVar>
+    <siraliDagitimRecetesi>H</siraliDagitimRecetesi>
+    <eczaneIndirimTutari>0.0</eczaneIndirimTutari>
+    <ilacKatilimPayiTutari>20.0</ilacKatilimPayiTutari>
+    <toplamTutar>200.0</toplamTutar>
+    <odenecekTutar>180.0</odenecekTutar>
+  </receteListesi>
+  <receteListesi>
+    <receteNo>0AAAAA2</receteNo>
+    <receteTarihi>01.01.2026</receteTarihi>
+    <ilacAlimTarihi>01.01.2026</ilacAlimTarihi>
+    <kapsamTuru>3</kapsamTuru>
+    <receteTuru>1</receteTuru>
+    <karekodVar>E</karekodVar>
+    <siraliDagitimRecetesi>H</siraliDagitimRecetesi>
+    <eczaneIndirimTutari>0.0</eczaneIndirimTutari>
+    <ilacKatilimPayiTutari>15.5</ilacKatilimPayiTutari>
+    <toplamTutar>155.0</toplamTutar>
+    <odenecekTutar>139.5</odenecekTutar>
+  </receteListesi>
+
+  <receteIlacListesi>
+    <receteNo>0AAAAA1</receteNo>
+    <barkod>8690000000011</barkod>
+    <adet>1</adet>
+    <raporlu>H</raporlu>
+    <toplamTutar>120.0</toplamTutar>
+    <ilacAdi>ORNEK ILAC A 500 MG 20 TABLET</ilacAdi>
+  </receteIlacListesi>
+  <receteIlacListesi>
+    <receteNo>0AAAAA1</receteNo>
+    <barkod>8690000000028</barkod>
+    <adet>1</adet>
+    <raporlu>H</raporlu>
+    <toplamTutar>80.0</toplamTutar>
+    <ilacAdi>ORNEK ILAC B 100 ML SURUP</ilacAdi>
+  </receteIlacListesi>
+  <receteIlacListesi>
+    <receteNo>0AAAAA2</receteNo>
+    <barkod>8690000000035</barkod>
+    <adet>1</adet>
+    <raporlu>E</raporlu>
+    <toplamTutar>155.0</toplamTutar>
+    <ilacAdi>ORNEK ILAC C 10 MG 28 FILM TABLET</ilacAdi>
+  </receteIlacListesi>
+
+  <receteSilinenListesi>
+    <receteNo>0AAAAA3</receteNo>
+  </receteSilinenListesi>
+
+  <receteKarekodListesi>
+    <receteNo>0AAAAA1</receteNo>
+    <gtin>8690000000011</gtin>
+    <sn>00000000000001</sn>
+    <bn>LOT0001</bn>
+    <xd>31.12.2028</xd>
+  </receteKarekodListesi>
+  <receteKarekodListesi>
+    <receteNo>0AAAAA1</receteNo>
+    <gtin>8690000000028</gtin>
+    <sn>00000000000002</sn>
+    <bn>LOT0002</bn>
+    <xd>31.12.2028</xd>
+  </receteKarekodListesi>
+  <receteKarekodListesi>
+    <receteNo>0AAAAA2</receteNo>
+    <gtin>8690000000035</gtin>
+    <sn>00000000000003</sn>
+    <bn>LOT0003</bn>
+    <xd>30.06.2029</xd>
+  </receteKarekodListesi>
+</gunlukStokBilgisiSorgulamaReturn>
+</ns2:gunlukStokBilgisiSorgulamaResponse>
+</soapenv:Body>
+</soapenv:Envelope>

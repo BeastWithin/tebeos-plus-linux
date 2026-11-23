@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://servisler.ws.eczane.gss.sgk.gov.tr" version="1.0" targetNamespace="http://servisler.ws.eczane.gss.sgk.gov.tr">
+
+  
+<xs:element name="aktifIlacListesiSorgula" type="tns:aktifIlacListesiSorgula"/>
+
+  
+<xs:element name="aktifIlacListesiSorgulaResponse" type="tns:aktifIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="aktifYurtdisiIlacListesiSorgula" type="tns:aktifYurtdisiIlacListesiSorgula"/>
+
+  
+<xs:element name="aktifYurtdisiIlacListesiSorgulaResponse" type="tns:aktifYurtdisiIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="etkinMaddeListesiSorgula" type="tns:etkinMaddeListesiSorgula"/>
+
+  
+<xs:element name="etkinMaddeListesiSorgulaResponse" type="tns:etkinMaddeListesiSorgulaResponse"/>
+
+  
+<xs:element name="etkinMaddeSutListesiSorgula" type="tns:etkinMaddeSutListesiSorgula"/>
+
+  
+<xs:element name="etkinMaddeSutListesiSorgulaResponse" type="tns:etkinMaddeSutListesiSorgulaResponse"/>
+
+  
+<xs:element name="kirmiziReceteIlacListesiSorgula" type="tns:kirmiziReceteIlacListesiSorgula"/>
+
+  
+<xs:element name="kirmiziReceteIlacListesiSorgulaResponse" type="tns:kirmiziReceteIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="kirmiziReceteYurtdisiIlacListesiSorgula" type="tns:kirmiziReceteYurtdisiIlacListesiSorgula"/>
+
+  
+<xs:element name="kirmiziReceteYurtdisiIlacListesiSorgulaResponse" type="tns:kirmiziReceteYurtdisiIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="morReceteIlacListesiSorgula" type="tns:morReceteIlacListesiSorgula"/>
+
+  
+<xs:element name="morReceteIlacListesiSorgulaResponse" type="tns:morReceteIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="morReceteYurtdisiIlacListesiSorgula" type="tns:morReceteYurtdisiIlacListesiSorgula"/>
+
+  
+<xs:element name="morReceteYurtdisiIlacListesiSorgulaResponse" type="tns:morReceteYurtdisiIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="normalReceteIlacListesiSorgula" type="tns:normalReceteIlacListesiSorgula"/>
+
+  
+<xs:element name="normalReceteIlacListesiSorgulaResponse" type="tns:normalReceteIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="normalReceteYurtdisiIlacListesiSorgula" type="tns:normalReceteYurtdisiIlacListesiSorgula"/>
+
+  
+<xs:element name="normalReceteYurtdisiIlacListesiSorgulaResponse" type="tns:normalReceteYurtdisiIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="pasifIlacListesiSorgula" type="tns:pasifIlacListesiSorgula"/>
+
+  
+<xs:element name="pasifIlacListesiSorgulaResponse" type="tns:pasifIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="pasifYurtdisiIlacListesiSorgula" type="tns:pasifYurtdisiIlacListesiSorgula"/>
+
+  
+<xs:element name="pasifYurtdisiIlacListesiSorgulaResponse" type="tns:pasifYurtdisiIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="raporTeshisListesiSorgula" type="tns:raporTeshisListesiSorgula"/>
+
+  
+<xs:element name="raporTeshisListesiSorgulaResponse" type="tns:raporTeshisListesiSorgulaResponse"/>
+
+  
+<xs:element name="turuncuReceteIlacListesiSorgula" type="tns:turuncuReceteIlacListesiSorgula"/>
+
+  
+<xs:element name="turuncuReceteIlacListesiSorgulaResponse" type="tns:turuncuReceteIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="turuncuReceteYurtdisiIlacListesiSorgula" type="tns:turuncuReceteYurtdisiIlacListesiSorgula"/>
+
+  
+<xs:element name="turuncuReceteYurtdisiIlacListesiSorgulaResponse" type="tns:turuncuReceteYurtdisiIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="yesilReceteIlacListesiSorgula" type="tns:yesilReceteIlacListesiSorgula"/>
+
+  
+<xs:element name="yesilReceteIlacListesiSorgulaResponse" type="tns:yesilReceteIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="yesilReceteYurtdisiIlacListesiSorgula" type="tns:yesilReceteYurtdisiIlacListesiSorgula"/>
+
+  
+<xs:element name="yesilReceteYurtdisiIlacListesiSorgulaResponse" type="tns:yesilReceteYurtdisiIlacListesiSorgulaResponse"/>
+
+  
+<xs:element name="yurtdisiIlacEtkinMaddeListesiSorgula" type="tns:yurtdisiIlacEtkinMaddeListesiSorgula"/>
+
+  
+<xs:element name="yurtdisiIlacEtkinMaddeListesiSorgulaResponse" type="tns:yurtdisiIlacEtkinMaddeListesiSorgulaResponse"/>
+
+  
+<xs:complexType name="etkinMaddeSutListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:etkinMaddeSutListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeSutListesiSorguIstekDVO">
+    
+<xs:sequence>
+      
+<xs:element name="tesisKodu" type="xs:int" nillable="true"/>
+      
+<xs:element name="doktorTcKimlikNo" type="xs:long" nillable="true"/>
+      
+<xs:element name="etkinMaddeKodu" type="xs:string"/>
+      
+<xs:element name="raporTarihi" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeSutListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="etkinMaddeSutListesiSorgulaReturn" type="tns:etkinMaddeSutListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeSutListesiSorguCevapDVO">
+    
+<xs:sequence>
+      
+<xs:element name="etkinMaddeSutListesi" type="tns:etkinMaddeSutDVO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="sonucKodu" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="sonucMesaji" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="uyariMesaji" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeSutDVO">
+    
+<xs:sequence>
+      
+<xs:element name="etkinMaddeSutNo" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="raporTeshisListesi" type="tns:raporTeshisDVO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="doktorBransListesi" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="doktorSertifikaListesi" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="tesisAnaGrupListesi" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="raporDuzenlemeTuru" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="cinsiyeti" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="maksimumRaporTarihi" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="minimumYasi" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="maksimumYasi" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="maksimumRaporSuresi" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="maksimumRaporSuresiBirimi" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="raporTeshisDVO">
+    
+<xs:sequence>
+      
+<xs:element name="raporTeshisKodu" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="aciklama" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="pasifIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="ilacListesiSorguIstekDVO">
+    
+<xs:sequence>
+      
+<xs:element name="tesisKodu" type="xs:int" nillable="true"/>
+      
+<xs:element name="doktorTcKimlikNo" type="xs:long" nillable="true"/>
+      
+<xs:element name="islemTarihi" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="pasifIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="pasifIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="ilacListesiSorguCevapDVO">
+    
+<xs:sequence>
+      
+<xs:element name="ilacListesi" type="tns:ilacDVO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="sonucKodu" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="sonucMesaji" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="uyariMesaji" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="ilacDVO">
+    
+<xs:sequence>
+      
+<xs:element name="barkod" type="xs:long"/>
+      
+<xs:element name="ilacAdi" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="sgkIlacKodu" type="xs:int"/>
+      
+<xs:element name="ambalajMiktari" type="xs:double"/>
+      
+<xs:element name="tekDozMiktari" type="xs:double"/>
+      
+<xs:element name="kutuBirimMiktari" type="xs:double"/>
+      
+<xs:element name="ayaktanOdenmeSarti" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="yatanOdenmeSarti" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="etkinMaddeKodu" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="normalReceteIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="normalReceteIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="normalReceteIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="morReceteIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="morReceteIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="morReceteIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="yesilReceteYurtdisiIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="yesilReceteYurtdisiIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="yesilReceteYurtdisiIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="raporTeshisListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:raporTeshisListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="raporTeshisListesiSorguIstekDVO">
+    
+<xs:sequence>
+      
+<xs:element name="tesisKodu" type="xs:int" nillable="true"/>
+      
+<xs:element name="doktorTcKimlikNo" type="xs:long" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="raporTeshisListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="raporTeshisListesiSorgulaReturn" type="tns:raporTeshisListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="raporTeshisListesiSorguCevapDVO">
+    
+<xs:sequence>
+      
+<xs:element name="raporTeshisListesi" type="tns:raporTeshisDVO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="sonucKodu" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="sonucMesaji" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="uyariMesaji" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="morReceteYurtdisiIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="morReceteYurtdisiIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="morReceteYurtdisiIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="aktifYurtdisiIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="aktifYurtdisiIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="aktifYurtdisiIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="pasifYurtdisiIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="pasifYurtdisiIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="pasifYurtdisiIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="aktifIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="aktifIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="aktifIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="yurtdisiIlacEtkinMaddeListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:etkinMaddeListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeListesiSorguIstekDVO">
+    
+<xs:sequence>
+      
+<xs:element name="tesisKodu" type="xs:int" nillable="true"/>
+      
+<xs:element name="doktorTcKimlikNo" type="xs:long" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="yurtdisiIlacEtkinMaddeListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="yurtdisiIlacEtkinMaddeListesiSorgulaReturn" type="tns:etkinMaddeListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeListesiSorguCevapDVO">
+    
+<xs:sequence>
+      
+<xs:element name="etkinMaddeListesi" type="tns:etkinMaddeDVO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      
+<xs:element name="sonucKodu" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="sonucMesaji" type="xs:string" minOccurs="0"/>
+      
+<xs:element name="uyariMesaji" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeDVO">
+    
+<xs:sequence>
+      
+<xs:element name="kodu" type="xs:string"/>
+      
+<xs:element name="adi" type="xs:string" nillable="true" minOccurs="0"/>
+      
+<xs:element name="icerikMiktari" type="xs:string"/>
+      
+<xs:element name="formu" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="kirmiziReceteYurtdisiIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="kirmiziReceteYurtdisiIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="kirmiziReceteYurtdisiIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:etkinMaddeListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="etkinMaddeListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="etkinMaddeListesiSorgulaReturn" type="tns:etkinMaddeListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="turuncuReceteYurtdisiIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="turuncuReceteYurtdisiIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="turuncuReceteYurtdisiIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="kirmiziReceteIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="kirmiziReceteIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="kirmiziReceteIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="yesilReceteIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="yesilReceteIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="yesilReceteIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="turuncuReceteIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="turuncuReceteIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="turuncuReceteIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="normalReceteYurtdisiIlacListesiSorgula">
+    
+<xs:sequence>
+      
+<xs:element name="arg0" type="tns:ilacListesiSorguIstekDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+<xs:complexType name="normalReceteYurtdisiIlacListesiSorgulaResponse">
+    
+<xs:sequence>
+      
+<xs:element name="normalReceteYurtdisiIlacListesiSorgulaReturn" type="tns:ilacListesiSorguCevapDVO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

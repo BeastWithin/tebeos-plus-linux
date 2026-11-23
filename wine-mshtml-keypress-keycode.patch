@@ -1,0 +1,20 @@
+--- /tmp/htmlevent.c.orig	2026-09-30 14:25:19.252067257 +0300
++++ dlls/mshtml/htmlevent.c	2026-09-30 14:25:19.285656852 +0300
+@@ -2912,6 +2912,17 @@
+     if(NS_FAILED(nsres))
+         return E_FAIL;
+ 
++    /* IE puts the character code in keyCode for keypress events.  Gecko only
++     * fills keyCode for keydown/keyup and leaves it 0 for keypress, where the
++     * character is in charCode instead.  IE-era code such as
++     *     if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;
++     * would otherwise cancel every keystroke. */
++    if(!r && This->ui_event.event.event_id == EVENTID_KEYPRESS) {
++        nsres = nsIDOMKeyEvent_GetCharCode(This->nsevent, &r);
++        if(NS_FAILED(nsres))
++            return E_FAIL;
++    }
++
+     *p = r;
+     return S_OK;
+ }

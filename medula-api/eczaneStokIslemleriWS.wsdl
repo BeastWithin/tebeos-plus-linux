@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:ns0="http://servisler.ws.eczane.gss.sgk.gov.tr" targetNamespace="http://servisler.ws.eczane.gss.sgk.gov.tr">
+<wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema>
+<xsd:import schemaLocation="eczaneStokIslemleriWS.xsd2.xsd" namespace="http://servisler.ws.eczane.gss.sgk.gov.tr"/></xsd:schema></wsdl:types>
+<wsdl:message name="gunlukStokBilgisiSorgulama">
+<wsdl:part name="parameters" element="xsns:gunlukStokBilgisiSorgulama" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:message name="gunlukStokBilgisiSorgulamaResponse">
+<wsdl:part name="parameters" element="xsns:gunlukStokBilgisiSorgulamaResponse" xmlns:xsns="http://servisler.ws.eczane.gss.sgk.gov.tr"/></wsdl:message>
+<wsdl:portType name="EczaneStokIslemleri">
+<wsdl:operation name="gunlukStokBilgisiSorgulama">
+<wsdl:input name="gunlukStokBilgisiSorgulamaRequest" message="ns0:gunlukStokBilgisiSorgulama"/>
+<wsdl:output name="gunlukStokBilgisiSorgulamaResponse" message="ns0:gunlukStokBilgisiSorgulamaResponse"/></wsdl:operation></wsdl:portType>
+<wsdl:binding name="EczaneStokIslemleriPortBinding" type="ns0:EczaneStokIslemleri">
+<soap11:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="gunlukStokBilgisiSorgulama">
+<soap11:operation soapAction="gunlukStokBilgisiSorgulama" style="document"/>
+<wsdl:input name="gunlukStokBilgisiSorgulamaRequest">
+<soap11:body use="literal"/></wsdl:input>
+<wsdl:output name="gunlukStokBilgisiSorgulamaResponse">
+<soap11:body use="literal"/></wsdl:output></wsdl:operation></wsdl:binding>
+<wsdl:service name="EczaneStokIslemleriService">
+<wsdl:port name="EczaneStokIslemleriPort" binding="ns0:EczaneStokIslemleriPortBinding">
+<soap11:address location="https://medeczane.sgk.gov.tr:443/medula/eczane/eczaneStokIslemleriWS"/></wsdl:port></wsdl:service></wsdl:definitions>

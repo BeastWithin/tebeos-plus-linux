@@ -1,0 +1,14 @@
+LIBRARY shim.dll
+EXPORTS
+    DllGetClassObject
+    DllCanUnloadNow
+    DllRegisterServer
+    DllUnregisterServer
+    shim_dom_connect
+    shim_render_connect
+    shim_dom_cdp
+    shim_render_cdp
+    shim_dom_navigate
+    shim_dom_disconnect
+    shim_doc_render_frame_info
+    shim_dom_calls

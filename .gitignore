@@ -1,0 +1,35 @@
+# --- never commit: personal data ---------------------------------------------
+# local TEBEOS login for run/runmedula.sh
+/tebeos-work/run/login.env
+# screenshots and captcha images (screens show pharmacy data)
+*.png
+*.bmp
+*.jpg
+# --- third-party code / binaries we don't redistribute ------------------------
+/tebeos_plus_setup.exe
+/tebeos_plus_client_setup_v1.exe
+/YeniTebeosIndirV1002.exe
+/tebeos-work/run/hxjs/
+/tebeos-work/tessnet2_decomp/
+# built Wine mshtml (rebuild from wine-mshtml-tebeos.patch; see BUILDING.md)
+/wine-patch/mshtml/
+# toolchains, Wine source and decompiled vendor code: all re-creatable (BUILDING.md)
+/toolchain/
+# --- build output and runtime noise ------------------------------------------
+*.exe
+*.dll
+*.o
+obj/
+bin/
+out/
+__pycache__/
+*.pid
+*.log
+*.bak-*
+*.reg.bak
+/tebeos-work/run/netwatch.out
+/tebeos-work/run/aedebug.txt
+/tebeos-work/run/bt.txt
+/tebeos-work/run/display.txt
+# Microsoft fonts: not redistributable (copy from a Windows install, see AI-HANDOFF.md)
+/fonts/

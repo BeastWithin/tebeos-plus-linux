@@ -1,0 +1,46 @@
+# Barcode scanner (USB 0581:011C) on a Turkish-F desktop.
+#
+# The scanner types as a US/Q keyboard: for "E" it presses the key that is E on a Q keyboard.
+# This PC's layout is Turkish F, where that key is "Ğ" -- lot numbers in karekods came out wrong
+# (26E811 -> 26Ğ811), while digits (same keys on both layouts) were fine. On Windows the layout
+# is Q, so the same scanner works there.
+#
+# This remaps only the scanner's keys to the Turkish-F keys that give the same characters;
+# the built-in keyboard is untouched. Remove it if the desktop layout is switched to Q.
+#
+# Install (root):
+#   sudo cp 70-barcode-scanner-trf.hwdb /etc/udev/hwdb.d/
+#   sudo systemd-hwdb update && sudo udevadm trigger --sysname-match="event*"
+# Then unplug and replug the scanner.
+#
+# Left as is: digits, Enter, Tab, '.', and l / p (same key on both layouts).
+# Letter i: mapped to the F key for I/ı, so an upper-case I is right (lot numbers use upper case);
+# a lower-case i would come out as ı.
+
+evdev:input:b0003v0581p011C*
+ KEYBOARD_KEY_70004=f
+ KEYBOARD_KEY_70005=comma
+ KEYBOARD_KEY_70006=v
+ KEYBOARD_KEY_70007=y
+ KEYBOARD_KEY_70008=d
+ KEYBOARD_KEY_70009=q
+ KEYBOARD_KEY_7000a=w
+ KEYBOARD_KEY_7000b=o
+ KEYBOARD_KEY_7000c=r
+ KEYBOARD_KEY_7000d=z
+ KEYBOARD_KEY_7000e=j
+ KEYBOARD_KEY_70010=k
+ KEYBOARD_KEY_70011=i
+ KEYBOARD_KEY_70012=t
+ KEYBOARD_KEY_70014=leftbrace
+ KEYBOARD_KEY_70015=u
+ KEYBOARD_KEY_70016=m
+ KEYBOARD_KEY_70017=h
+ KEYBOARD_KEY_70018=a
+ KEYBOARD_KEY_70019=c
+ KEYBOARD_KEY_7001a=rightbrace
+ KEYBOARD_KEY_7001b=backslash
+ KEYBOARD_KEY_7001c=semicolon
+ KEYBOARD_KEY_7001d=n
+ KEYBOARD_KEY_7002d=equal
+ KEYBOARD_KEY_70038=minus
